@@ -1,18 +1,12 @@
 # Count words.
 
-results.txt : isles.dat abyss.dat last.dat
-	python testzipf.py $^ > $@
+results.txt : testzipf.py isles.dat abyss.dat last.dat
+	python $< *.dat  > $@
 .PHONY : dats
 dats : isles.dat abyss.dat last.dat
 
-isles.dat : books/isles.txt
-	python countwords.py $< $@
-
-abyss.dat : books/abyss.txt
-	python countwords.py $< $@
-
-last.dat : books/last.txt
-	python countwords.py $< $@
+%.dat : books/%.txt countwords.py
+	python countwords.py $< $*.dat
 
 .PHONY : clean
 clean :
